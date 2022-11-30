@@ -2,13 +2,10 @@ import os
 
 import numpy as np
 import tensorflow as tf
-import pandas as pd
 import pretty_midi
-import collections
-from IPython import display
 from sklearn.model_selection import train_test_split
 
-filepath = "../data/debussy/"
+filepath = "../data/debussy/"  ## only songs by Debussy are used.
 seed = 42
 tf.random.set_seed(seed)
 np.random.seed(seed)
