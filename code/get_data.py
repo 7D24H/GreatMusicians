@@ -109,7 +109,7 @@ def get_data():
     X = (np.reshape(features, (len(features), length, 1)) - 21) / 1.0 ## expand one dimension for LSTM
     # use one-hot encoding for labels
     y = (np.array(labels)-21)
-    y = tf.keras.utils.to_categorical(y)
+    y = tf.keras.utils.to_categorical(y, 88)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     return X_train, X_test, y_train, y_test
 
