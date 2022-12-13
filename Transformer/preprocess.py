@@ -8,9 +8,14 @@ import matplotlib.pyplot as plt
 import glob
 from itertools import groupby
 import gc
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow.keras.layers.experimental.preprocessing import TextVectorization
+from sklearn.preprocessing import MultiLabelBinarizer
 
-data_path = "./classic_piano/"
-encoded_data_path = "./encoded_classic_piano/"
+data_path = "./data/jazz_piano/" # modify here if you want to use other dataset      
+encoded_data_path = "./data/encoded_jazz/"
 
 def extract_midi_info(path):
     mid = converter.parse(path)
@@ -85,6 +90,36 @@ for temp in glob.glob(data_path + "*.mid"):
         print(f"Faield to preprocess {temp}")
         failed_list.append(temp)
         continue
+
+
+mlb = MultiLabelBinarizer()
+mlb.fit([np.arange(128).tolist()])
+
+# encoded_data_path = "./data/encoded_data/"
+output_path = "./output/"
+
+batch_size = 32
+# sequence_length = 500
+sequence_length = 600
+generate_sample_every_ep = 100
+
+maxlen = sequence_length  # Max sequence size
+# embed_dim = 128  # Embedding size for each token
+embed_dim = 128  # Embedding size for each token
+num_heads = 4  # Number of attention heads
+feed_forward_dim = 128  # Hidden layer size in feed forward network inside transformer
+
+combi_to_int_pickle = "combi_to_int.pickle"
+int_to_combi_pickle = "int_to_combi.pickle"
+vocab_pickle = "vocab.pickle"
+
+# vocab_size = 50000
+vocab_size = 40000
+unk_tag_str = '<UNK>'
+unk_tag_idx = 0
+pad_tag_str = ''
+pad_tag_idx = 1
+
 
 all_songs = []
 all_songs_np = np.empty((0,128), np.int8)

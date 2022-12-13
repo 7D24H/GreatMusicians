@@ -106,15 +106,18 @@ def piano_to_midi(piano_roll_in, fs, program=0, velocity = 64):
     return pm
 
 fs = 1/((60/150)/4)
-name = "test"
+name = "jazz"
 output_path = "./output/"
 mid_out = piano_to_midi(piano_roll.T, fs=fs)
 mid_seq_copy = piano_to_midi(seq_copy.T, fs=fs)
-mid_out.write(output_path+f"{name}.mid")
+## save the generated music
+mid_out.write(output_path+f"generated-{name}.mid")
+## save the 4 bars of trigger
 mid_seq_copy.write(output_path+f"ori-snapshot.mid")
 
-song_full = processed_dataset[song_idx][start_idx:].tolist()
-song_full = convertToRoll(song_full)
-song_full = piano_to_midi(song_full.T, fs=fs)
-midi_song_full_path = output_path+f"ori-full-{name}.mid"
-song_full.write(midi_song_full_path)
+## save the full song of the trigger
+# song_full = processed_dataset[song_idx][start_idx:].tolist()
+# song_full = convertToRoll(song_full)
+# song_full = piano_to_midi(song_full.T, fs=fs)
+# midi_song_full_path = output_path+f"ori-full-{name}.mid"
+# song_full.write(midi_song_full_path)
